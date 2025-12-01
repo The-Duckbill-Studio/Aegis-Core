@@ -1,26 +1,29 @@
 // vite.config.ts
-// Use "import path from 'path';" if using ES Modules, or follow the code below.
-
+// 1. MUST import 'resolve' from 'path'
 import { defineConfig } from 'vite';
-import path from 'path'; // <--- Ensure you have the 'path' types installed, see below
+import { resolve } from 'path'; 
 
 export default defineConfig({
+  // Setting base to './' is often necessary for relative asset paths on Netlify
   base: './', 
   
   build: {
     outDir: 'dist',
     
+    // 2. The Multi-Page Application (MPA) configuration
     rollupOptions: {
       input: {
-        // Use path.resolve()
-        main: path.resolve(__dirname, 'index.html'), 
-        about: path.resolve(__dirname, 'src/pages/about.html'),
-        contact: path.resolve(__dirname, 'src/pages/contact.html'),
-        pricing: path.resolve(__dirname, 'src/pages/pricing.html'),
-        services: path.resolve(__dirname, 'src/pages/services.html'),
+        // Use resolve(__dirname, 'filename') for all paths
+        main: resolve(__dirname, 'index.html'), 
+        about: resolve(__dirname, 'src/pages/about.html'),
+        contact: resolve(__dirname, 'src/pages/contact.html'),
+        pricing: resolve(__dirname, 'src/pages/pricing.html'),
+        services: resolve(__dirname, 'src/pages/services.html'),
+        // Add any other HTML files here
       },
     },
   },
+  
   plugins: [
     // Your existing plugins
   ]
