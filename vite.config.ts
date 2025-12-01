@@ -1,12 +1,36 @@
 // vite.config.ts
-import { defineConfig } from 'vite'
+
+// 1. Import 'resolve' from 'path' for correct file path handling
+import { resolve } from 'path'; 
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // ADD THIS LINE to tell Vite to look for source files in the current directory
-  root: './', 
-  plugins: [/* Your existing plugins */],
+  // This sets the base directory for the build output.
+  base: './', 
+  
   build: {
-    // You may need to add this line to ensure the output directory is 'dist'
+    // 2. Specify the output directory (dist is correct)
     outDir: 'dist',
-  }
-})
+    
+    // 3. This is the crucial part for multi-page applications (MPA)
+    rollupOptions: {
+      input: {
+        // Main page in the project root
+        main: resolve(__dirname, 'index.html'), 
+
+        // Additional pages in the src/pages folder (adjust names/paths as needed)
+        about: resolve(__dirname, 'src/pages/about.html'),
+        contact: resolve(__dirname, 'src/pages/contact.html'),
+        pricing: resolve(__dirname, 'src/pages/pricing.html'),
+        services: resolve(__dirname, 'src/pages/services.html'),
+        
+        // Add any other HTML files in your project here:
+        // example: resolve(__dirname, 'src/pages/another-page.html'),
+      },
+    },
+  },
+  
+  plugins: [
+    // Your existing plugins (if any) go here
+  ]
+});
